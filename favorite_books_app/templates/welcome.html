@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weolcome</title>
+    <style>
+        .link{
+            float: right;
+        }
+        .asd{
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <a href="/logout" class="link">Logout</a>
+    <h3>Welcome {{loggeduser.firstname}}</h3>
+    <div class="asd">
+    <form action="/addbook" method="post">
+        {% csrf_token %}
+        <h4>add a favorite book</h4>
+        <input type="hidden" name="userid", value="{{loggeduser.id}}">
+        Title: <input type="text" name="title">
+        Description: <textarea name="desc" cols="30" rows="10"></textarea>
+        <input type="submit" value="Add">
+    </form>
+    <div>
+    <h4>All Books</h4>
+    {%for book in books%}
+        <h5><a href="/books/{{book.id}}">{{book.title}}</a></h5>
+        <p>{{book.desc}}</p>
+    {%endfor%}
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .link{
+            float: right;
+        }
+        .asd{
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <a href="/logout" class="link">Logout</a>
+    <h3>Welcome {{loggeduser.firstname}}</h3>
+    <div class="asd">
+        <div>
+            
+            {%if loggeduser.id == book.uploaded_by_id.id%}
+                <form action="/editbook" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="title" value="{{book.title}}">
+                    <input type="hidden" name="pretitle" value="{{book.title}}">
+                    <p>Added By: {{loggeduser.firstname}} {{loggeduser.lastname}}</p>
+                    <p>Added on: {{book.created_at}}</p>
+                    <p>Last updated on: {{book.updated_at}}</p>
+                    Description: <textarea name="desc">{{book.desc}}</textarea>
+                    <input type="submit" Value='Update'>
+                </form>
+                <a href="/delete">Delete</a>
+            {%else%}
+            <h4>{{book.title}}</h4>
+            <p>Added By: {{loggeduser.firstname}} {{loggeduser.lastname}}</p>
+            <p>Added on: {{book.created_at}}</p>
+            <p>Last updated on: {{book.updated_at}}</p>
+            <p>Description: {{book.desc}}</p>
+            {%endif%}
+
+        </div>
+        <div>
+            <h3>Users who like this book:</h3>
+            {%for user in users%}
+            {%if user.favbook == book.favorite%}
+            <p>{{user.firstname}}</p>
+            {%endif%}
+            {%endfor%}
+        </div>
+    </div>
+</body>
+</html>
